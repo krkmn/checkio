@@ -1,42 +1,36 @@
-from math import sqrt
-from functools import reduce
 def checkio(number):
+    array = []
 
-    def find_all_factors(number):
-        factors = []
-        for i in range(2,int(sqrt(number))+2):
-            if number/i == int(number/i):
-                second_number = int(number/i)
-                factors += find_all_factors(second_number)
+    def prime(number):
+        for i in range(2, int(number ** 0.5) + 1):
 
-        return factors + [number]
+            if number / i == int(number / i) and not number / i == 1:
+                array.append(i)
+                prime(number / i)
+                return None
 
-    A = find_all_factors(number)
-    print(A)
+        array.append(int(number))
+        return 0
 
-    return 0
-    # print(i)
-    # string_of_numbers = f"{i}{int(number/i)}"
-    # if not factors:
-    #     return 0
-    #
-    #
-    # for lines in factors:
-    #     answer =  reduce(lambda x, y: int(x) * int(y),lines)
-    #     print(answer)
-    #     if answer == number:
-    #         return int(lines)
-    #
-    # return 0
+    prime(number)
+    if any([x > 9 for x in array]):
+        return 0
 
+    joined_array = ','.join(map(str, array))
+    joined_array = joined_array.replace('3,3', '9')
+    joined_array = joined_array.replace('2,2,2', '8')
+    joined_array = joined_array.replace('2,3', '6')
+    joined_array = joined_array.replace('2,2', '4')
 
-# A = checkio(20)
-B = checkio(20)
-# if __name__ == '__main__':
-#     # These "asserts" using only for self-checking and not necessary for auto-testing
-#     assert checkio(20) == 45, "1st example"
-#     assert checkio(21) == 37, "2nd example"
-#     assert checkio(17) == 0, "3rd example"
-#     assert checkio(33) == 0, "4th example"
-#     assert checkio(3125) == 55555, "5th example"
-#     assert checkio(9973) == 0, "6th example"
+    return_number = int(''.join(sorted(joined_array.split(','))))
+
+    return 0 if return_number == number else return_number
+
+if __name__ == '__main__':
+    # These "asserts" using only for self-checking and not necessary for auto-testing
+    assert checkio(20) == 45, "1st example"
+    assert checkio(21) == 37, "2nd example"
+    assert checkio(17) == 0, "3rd example"
+    assert checkio(33) == 0, "4th example"
+    assert checkio(3125) == 55555, "5th example"
+    assert checkio(9973) == 0, "6th example"
