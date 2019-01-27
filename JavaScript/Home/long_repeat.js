@@ -23,7 +23,7 @@ function longRepeat(line) {
 	}
 	array.sort(); //Sort alphabetically first
 	array.sort((a,b) => b.length - a.length)
-	console.log(array);
+
     return array[0].length;
 }
 
